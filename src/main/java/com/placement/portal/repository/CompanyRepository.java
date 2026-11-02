@@ -65,4 +65,10 @@ public class CompanyRepository {
                 company.getCompanyId()
         );
     }
+
+    // Delete company
+    public int deleteCompany(int companyId) {
+        String sql = "DELETE FROM companies WHERE company_id = ?";
+        return jdbcTemplate.update(sql, companyId);
+    }
 }
