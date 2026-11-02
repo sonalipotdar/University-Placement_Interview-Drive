@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Applications | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Placement Portal</h2>
+    <a th:href="@{/}">Dashboard</a>
+    <a th:href="@{/students-page}">Students</a>
+    <a th:href="@{/companies-page}">Companies</a>
+    <a th:href="@{/applications-page}">Applications</a>
+    <a th:href="@{/reports-page}">Reports</a>
+</div>
+
+<div class="main-content">
+
+    <h1>Applications</h1>
+    <p>Manage student placement applications.</p>
+
+    <p class="success" th:if="${success}" th:text="${success}"></p>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <div class="actions">
+        <a class="btn" th:href="@{/applications-page/add}">
+            + Submit Application
+        </a>
+    </div>
+
+    <form th:action="@{/applications-page/student}" method="get">
+        <input type="text"
+               name="rollNo"
+               placeholder="Enter student roll number"
+               th:value="${searchRollNo}">
+
+        <button type="submit">Search</button>
+        <a th:href="@{/applications-page}">Show All</a>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Application ID</th>
+            <th>Student Roll No</th>
+            <th>Company ID</th>
+            <th>Interview Status</th>
+            <th>Update Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="app : ${applications}">
+            <td th:text="${app.appId}"></td>
+            <td th:text="${app.rollNo}"></td>
+            <td th:text="${app.companyId}"></td>
+            <td th:text="${app.interviewStatus}"></td>
+
+            <td>
+                <form th:action="@{/applications-page/update-status/{id}(id=${app.appId})}"
+                      method="post">
+
+                    <select name="interviewStatus" required>
+                        <option value="APPLIED">APPLIED</option>
+                        <option value="SHORTLISTED">SHORTLISTED</option>
+                        <option value="INTERVIEWING">INTERVIEWING</option>
+                        <option value="OFFERED">OFFERED</option>
+                        <option value="REJECTED">REJECTED</option>
+                    </select>
+
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(applications)}">
+            <td colspan="5">No applications found.</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

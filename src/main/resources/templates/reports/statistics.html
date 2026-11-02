@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Reports | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students-page}">Students</a>
+        <a th:href="@{/companies-page}">Companies</a>
+        <a th:href="@{/applications-page}">Applications</a>
+        <a class="active" th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">PLACEMENT ANALYTICS</p>
+            <h1>Placement Reports</h1>
+            <p>Overview of placement performance and offers.</p>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <section class="stat-card">
+            <p>Placement Percentage</p>
+            <h2>
+                <span th:text="${statistics.placementPercentage}">0</span>%
+            </h2>
+        </section>
+
+        <section class="stat-card">
+            <p>Average Package</p>
+            <h2>
+                ₹<span th:text="${statistics.averagePackage}">0</span>
+                <small>LPA</small>
+            </h2>
+        </section>
+
+        <section class="stat-card">
+            <p>Total Offers</p>
+            <h2 th:text="${statistics.totalOffers}">0</h2>
+        </section>
+    </div>
+
+    <div class="notice">
+        These statistics are retrieved from the placement statistics service and database.
+    </div>
+
+    <a class="back-link" th:href="@{/}">← Back to Dashboard</a>
+</main>
+</body>
+</html>

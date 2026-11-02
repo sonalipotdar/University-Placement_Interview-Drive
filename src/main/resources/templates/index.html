@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Portal | Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students-page}">Students</a>
+        <a th:href="@{/companies-page}">Companies</a>
+        <a th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <p class="eyebrow">UNIVERSITY PLACEMENT MANAGEMENT</p>
+        <h1>Placement & Interview Drive Portal</h1>
+        <p>Manage student records, company drives, applications and placement results from one place.</p>
+    </section>
+
+    <section class="card-grid">
+        <a class="module-card" th:href="@{/students-page}">
+            <span class="module-icon">🎓</span>
+            <h2>Students</h2>
+            <p>Register, view, update and manage student records.</p>
+            <span class="card-link">Manage students →</span>
+        </a>
+
+        <a class="module-card" th:href="@{/companies-page}">
+            <span class="module-icon">🏢</span>
+            <h2>Companies</h2>
+            <p>Manage recruiters, eligibility criteria and packages.</p>
+            <span class="card-link">Manage companies →</span>
+        </a>
+
+        <a class="module-card" th:href="@{/applications-page}">
+            <span class="module-icon">📄</span>
+            <h2>Applications</h2>
+            <p>Submit applications and update interview statuses.</p>
+            <span class="card-link">Manage applications →</span>
+        </a>
+
+        <a class="module-card" th:href="@{/reports-page}">
+            <span class="module-icon">📊</span>
+            <h2>Placement Reports</h2>
+            <p>View placement statistics and offer information.</p>
+            <span class="card-link">View reports →</span>
+        </a>
+    </section>
+</main>
+
+<footer class="footer">University Placement & Interview Drive Portal</footer>
+</body>
+</html>

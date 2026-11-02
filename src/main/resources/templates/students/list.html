@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a class="active" th:href="@{/students-page}">Students</a>
+        <a th:href="@{/companies-page}">Companies</a>
+        <a th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">STUDENT MANAGEMENT</p>
+            <h1>Students</h1>
+            <p>View and manage registered students.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/students-page/add}">+ Add Student</a>
+    </div>
+
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>CGPA</th>
+                <th>Active Backlogs</th>
+                <th>Placement Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.rollNo}"></td>
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.cgpa}"></td>
+                <td th:text="${student.activeBacklogs}"></td>
+                <td>
+                    <span class="status"
+                          th:classappend="${student.placementStatus == 'PLACED'} ? ' status-success' : ' status-pending'"
+                          th:text="${student.placementStatus}"></span>
+                </td>
+                <td class="actions">
+                    <a class="btn btn-small btn-secondary"
+                       th:href="@{/students-page/edit/{rollNo}(rollNo=${student.rollNo})}">Edit</a>
+
+                    <form th:action="@{/students-page/delete/{rollNo}(rollNo=${student.rollNo})}"
+                          method="post"
+                          onsubmit="return confirm('Delete this student?');">
+                        <button class="btn btn-small btn-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(students)}">
+                <td colspan="6" class="empty-state">No students found. Add your first student.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a class="back-link" th:href="@{/}">← Back to Dashboard</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Application | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students-page}">Students</a>
+        <a th:href="@{/companies-page}">Companies</a>
+        <a class="active" th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container narrow">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">APPLICATION MANAGEMENT</p>
+            <h1>Submit Application</h1>
+            <p>Select a student and a company drive.</p>
+        </div>
+    </div>
+
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+
+    <form class="form-card" th:action="@{/applications-page/add}" method="post">
+
+        <div class="form-group">
+            <label for="rollNo">Student</label>
+            <select id="rollNo" name="rollNo" required>
+                <option value="">Select a student</option>
+                <option th:each="student : ${students}"
+                        th:value="${student.rollNo}"
+                        th:text="${student.rollNo + ' - ' + student.name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="companyId">Company</label>
+            <select id="companyId" name="companyId" required>
+                <option value="">Select a company</option>
+                <option th:each="company : ${companies}"
+                        th:value="${company.companyId}"
+                        th:text="${company.companyName + ' - ' + company.packageOffered + ' LPA'}">
+                </option>
+            </select>
+        </div>
+
+        <input type="hidden" name="interviewStatus" value="APPLIED">
+
+        <div class="notice">
+            The system checks the student's CGPA, active backlogs and placement status
+            before accepting the application.
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Submit Application</button>
+            <a class="btn btn-secondary" th:href="@{/applications-page}">Cancel</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students-page}">Students</a>
+        <a class="active" th:href="@{/companies-page}">Companies</a>
+        <a th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">RECRUITER MANAGEMENT</p>
+            <h1>Companies</h1>
+            <p>Manage recruiters and their eligibility requirements.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/companies-page/add}">+ Add Company</a>
+    </div>
+
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Company ID</th>
+                <th>Company Name</th>
+                <th>Minimum CGPA</th>
+                <th>Maximum Backlogs</th>
+                <th>Package (LPA)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="company : ${companies}">
+                <td th:text="${company.companyId}"></td>
+                <td th:text="${company.companyName}"></td>
+                <td th:text="${company.minCgpa}"></td>
+                <td th:text="${company.maxActiveBacklogs}"></td>
+                <td th:text="${company.packageOffered}"></td>
+                <td class="actions">
+                    <a class="btn btn-small btn-secondary"
+                       th:href="@{/companies-page/edit/{companyId}(companyId=${company.companyId})}">Edit</a>
+
+                    <form th:action="@{/companies-page/delete/{companyId}(companyId=${company.companyId})}"
+                          method="post"
+                          onsubmit="return confirm('Delete this company?');">
+                        <button class="btn btn-small btn-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(companies)}">
+                <td colspan="6" class="empty-state">No companies found. Add your first company.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a class="back-link" th:href="@{/}">← Back to Dashboard</a>
+</main>
+</body>
+</html>

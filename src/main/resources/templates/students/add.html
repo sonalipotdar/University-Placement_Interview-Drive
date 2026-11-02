@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a class="active" th:href="@{/students-page}">Students</a>
+        <a th:href="@{/companies-page}">Companies</a>
+        <a th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container narrow">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">STUDENT MANAGEMENT</p>
+            <h1>Add Student</h1>
+            <p>Enter the student's academic and placement details.</p>
+        </div>
+    </div>
+
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+
+    <form class="form-card" th:action="@{/students-page/add}" th:object="${student}" method="post">
+        <div class="form-group">
+            <label for="rollNo">Roll Number</label>
+            <input id="rollNo" type="text" th:field="*{rollNo}" required maxlength="30"
+                   placeholder="Example: NIT006">
+        </div>
+
+        <div class="form-group">
+            <label for="name">Student Name</label>
+            <input id="name" type="text" th:field="*{name}" required
+                   placeholder="Enter full name">
+        </div>
+
+        <div class="form-group">
+            <label for="cgpa">CGPA</label>
+            <input id="cgpa" type="number" th:field="*{cgpa}" required
+                   min="0" max="10" step="0.01" placeholder="Example: 8.25">
+        </div>
+
+        <div class="form-group">
+            <label for="activeBacklogs">Active Backlogs</label>
+            <input id="activeBacklogs" type="number" th:field="*{activeBacklogs}"
+                   required min="0" placeholder="Enter number of backlogs">
+        </div>
+
+        <div class="form-group">
+            <label for="placementStatus">Placement Status</label>
+            <select id="placementStatus" th:field="*{placementStatus}" required>
+                <option value="UNPLACED">UNPLACED</option>
+                <option value="PLACED">PLACED</option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save Student</button>
+            <a class="btn btn-secondary" th:href="@{/students-page}">Cancel</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

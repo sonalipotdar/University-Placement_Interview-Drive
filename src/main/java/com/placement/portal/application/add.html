@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Application</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Placement Portal</h2>
+    <a th:href="@{/}">Dashboard</a>
+    <a th:href="@{/students-page}">Students</a>
+    <a th:href="@{/companies-page}">Companies</a>
+    <a th:href="@{/applications-page}">Applications</a>
+    <a th:href="@{/reports-page}">Reports</a>
+</div>
+
+<div class="main-content">
+
+    <h1>Submit Application</h1>
+
+    <form th:action="@{/applications-page/add}" method="post">
+
+        <label>Student</label>
+        <select name="rollNo" required>
+            <option value="">Select Student</option>
+            <option th:each="student : ${students}"
+                    th:value="${student.rollNo}"
+                    th:text="${student.rollNo + ' - ' + student.name}">
+            </option>
+        </select>
+
+        <label>Company</label>
+        <select name="companyId" required>
+            <option value="">Select Company</option>
+            <option th:each="company : ${companies}"
+                    th:value="${company.companyId}"
+                    th:text="${company.companyName}">
+            </option>
+        </select>
+
+        <button type="submit">Submit Application</button>
+
+        <a th:href="@{/applications-page}">Cancel</a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

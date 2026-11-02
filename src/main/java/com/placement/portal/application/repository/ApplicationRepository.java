@@ -122,4 +122,53 @@ public class ApplicationRepository {
         );
         return count != null && count > 0;
     }
+    // Get the package offered by a company
+public double getCompanyPackage(int companyId) {
+
+    Double packageLpa = jdbcTemplate.queryForObject(
+            "SELECT package_lpa FROM companies WHERE company_id = ?",
+            Double.class,
+            companyId
+    );
+
+    if (packageLpa == null) {
+        throw new IllegalArgumentException("Company not found: " + companyId);
+    }
+
+    return packageLpa;
+}
+
+
+// Mark student as PLACED
+public void markStudentPlaced(String rollNo) {
+
+    jdbcTemplate.update(
+            "UPDATE students SET placement_status = 'PLACED' WHERE roll_no = ?",
+            rollNo
+    );
+}
+
+
+// Cancel pending applications for lower-package companies
+public int cancelLowerPackageApplications(
+        String rollNo,
+        int currentAppId,
+        double offeredPackage) {
+
+    String sql =
+            "UPDATE applications a " +
+            "JOIN companies c ON a.company_id = c.company_id " +
+            "SET a.interview_status = 'CANCELLED' " +
+            "WHERE a.roll_no = ? " +
+            "AND a.app_id <> ? " +
+            "AND c.package_lpa < ? " +
+            "AND a.interview_status IN ('APPLIED', 'SHORTLISTED', 'INTERVIEWING')";
+
+    return jdbcTemplate.update(
+            sql,
+            rollNo,
+            currentAppId,
+            offeredPackage
+    );
+}
 }

@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students-page}">Students</a>
+        <a th:href="@{/companies-page}">Companies</a>
+        <a class="active" th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">APPLICATION MANAGEMENT</p>
+            <h1>Applications</h1>
+            <p>Track student applications and interview progress.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/applications-page/add}">+ New Application</a>
+    </div>
+
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+
+    <form class="search-form" th:action="@{/applications-page/student}" method="get">
+        <input type="text" name="rollNo" placeholder="Search by student roll number"
+               th:value="${searchRollNo}">
+        <button class="btn btn-primary" type="submit">Search</button>
+        <a class="btn btn-secondary" th:href="@{/applications-page}">Show All</a>
+    </form>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>Application ID</th>
+                <th>Student Roll No.</th>
+                <th>Company ID</th>
+                <th>Interview Status</th>
+                <th>Update Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="application : ${applications}">
+                <td th:text="${application.appId}"></td>
+                <td th:text="${application.rollNo}"></td>
+                <td th:text="${application.companyId}"></td>
+                <td>
+                    <span class="status"
+                          th:classappend="${application.interviewStatus == 'OFFERED'} ? ' status-success' :
+                          (${application.interviewStatus == 'REJECTED' or application.interviewStatus == 'CANCELLED'} ? ' status-danger' : ' status-pending')"
+                          th:text="${application.interviewStatus}"></span>
+                </td>
+                <td>
+                    <form class="inline-form"
+                          th:action="@{/applications-page/update-status/{appId}(appId=${application.appId})}"
+                          method="post">
+                        <select name="interviewStatus" required>
+                            <option value="APPLIED"
+                                    th:selected="${application.interviewStatus == 'APPLIED'}">APPLIED</option>
+                            <option value="SHORTLISTED"
+                                    th:selected="${application.interviewStatus == 'SHORTLISTED'}">SHORTLISTED</option>
+                            <option value="INTERVIEWING"
+                                    th:selected="${application.interviewStatus == 'INTERVIEWING'}">INTERVIEWING</option>
+                            <option value="OFFERED"
+                                    th:selected="${application.interviewStatus == 'OFFERED'}">OFFERED</option>
+                            <option value="REJECTED"
+                                    th:selected="${application.interviewStatus == 'REJECTED'}">REJECTED</option>
+                        </select>
+                        <button class="btn btn-small btn-primary" type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(applications)}">
+                <td colspan="5" class="empty-state">No applications found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="help-text">
+        When an application is marked OFFERED, the placement service marks the student as PLACED
+        and cancels qualifying pending applications for lower packages.
+    </p>
+
+    <a class="back-link" th:href="@{/}">← Back to Dashboard</a>
+</main>
+</body>
+</html>

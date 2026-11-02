@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Company | Placement Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" th:href="@{/}">Placement Portal</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students-page}">Students</a>
+        <a class="active" th:href="@{/companies-page}">Companies</a>
+        <a th:href="@{/applications-page}">Applications</a>
+        <a th:href="@{/reports-page}">Reports</a>
+    </nav>
+</header>
+
+<main class="container narrow">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">RECRUITER MANAGEMENT</p>
+            <h1>Add Company</h1>
+            <p>Enter company details and eligibility criteria.</p>
+        </div>
+    </div>
+
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+
+    <form class="form-card" th:action="@{/companies-page/add}"
+          th:object="${company}" method="post">
+
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input id="companyName" type="text" th:field="*{companyName}"
+                   required placeholder="Example: Infosys">
+        </div>
+
+        <div class="form-group">
+            <label for="minCgpa">Minimum CGPA</label>
+            <input id="minCgpa" type="number" th:field="*{minCgpa}"
+                   required min="0" max="10" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <label for="maxActiveBacklogs">Maximum Active Backlogs</label>
+            <input id="maxActiveBacklogs" type="number"
+                   th:field="*{maxActiveBacklogs}" required min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="packageOffered">Package Offered (LPA)</label>
+            <input id="packageOffered" type="number"
+                   th:field="*{packageOffered}" required min="0" step="0.01">
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save Company</button>
+            <a class="btn btn-secondary" th:href="@{/companies-page}">Cancel</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>
