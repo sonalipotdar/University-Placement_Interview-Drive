@@ -3,10 +3,10 @@ package com.placement.portal.model;
 
 public class Company {
 
-    private int companyId;
+    private Integer companyId;
     private String companyName;
     private double minCgpa;
-    private int maxActiveBacklogs;
+    private Integer maxActiveBacklogs;
     private double packageOffered;
     private String jobRole;
 
@@ -15,8 +15,8 @@ public class Company {
     }
 
     // Parameterized constructor
-    public Company(int companyId, String companyName,
-                   double minCgpa, int maxActiveBacklogs,
+    public Company(Integer companyId, String companyName,
+                   double minCgpa, Integer maxActiveBacklogs,
                    double packageOffered, String jobRole) {
 
         this.companyId = companyId;
@@ -28,12 +28,11 @@ public class Company {
     }
 
     // Getters and Setters
-
-    public int getCompanyId() {
+    public Integer getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(int companyId) {
+    public void setCompanyId(Integer companyId) {
         this.companyId = companyId;
     }
 
@@ -53,11 +52,11 @@ public class Company {
         this.minCgpa = minCgpa;
     }
 
-    public int getMaxActiveBacklogs() {
+    public Integer getMaxActiveBacklogs() {
         return maxActiveBacklogs;
     }
 
-    public void setMaxActiveBacklogs(int maxActiveBacklogs) {
+    public void setMaxActiveBacklogs(Integer maxActiveBacklogs) {
         this.maxActiveBacklogs = maxActiveBacklogs;
     }
 
